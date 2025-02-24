@@ -1,0 +1,592 @@
+<!-- layout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LearnWise{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- In layout.html head section -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Modern Color Palette */
+:root {
+  --primary: #4a90e2;
+  --primary-dark: #357abd;
+  --secondary: #2ecc71;
+  --secondary-dark: #27ae60;
+  --accent: #e67e22;
+  --accent-dark: #d35400;
+  --background: #1b1818;
+  --surface: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #7f8c8d;
+  --error: #e74c3c;
+  --success: #2ecc71;
+}
+
+/* Global Styles */
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* color: black; */
+}
+
+/* Container Styles */
+.auth-container, .search-results-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Card Styles */
+.auth-box{
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.auth-box {
+  padding: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.course-card {
+  background-color: #ffffff !important;/* Change this to your desired card background color */
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.course-content {
+  padding: 1.5rem;
+  background-color: #ffffff !important;  /* Ensure content area is also white */
+  color: #333333 !important;  /* Force dark text color */
+ 
+}
+
+.course-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333333 !important; 
+}
+
+.course-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 20px rgba(216, 201, 201, 0.1);
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.875rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: var(--surface);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  outline: none;
+}
+
+/* Button Styles */
+.auth-button, .enroll-button {
+  background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.auth-button:hover, .enroll-button:hover {
+  background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(38, 69, 104, 0.2);
+}
+
+/* Course Grid */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+
+
+.course-instructor {
+  color: var(--primary);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.course-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Loading Animation */
+.loading {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(74, 144, 226, 0.1);
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* Dropdown Styles */
+.categories-section .dropdown-toggle {
+  background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.dropdown-item {
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+  color: var(--primary);
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-link {
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Quiz Form Styles */
+.question-block {
+  background-color: rgba(74, 144, 226, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .auth-container, .search-results-container {
+    padding: 0 1rem;
+  }
+  
+  .auth-box {
+    padding: 1.5rem;
+  }
+}
+</style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .header {
+            padding: 1rem 2rem;
+            background: rgb(0, 0, 0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .auth-container {
+            min-height: calc(100vh - 72px);
+            background: linear-gradient(45deg, #000000, #311b92);
+            /* background: black; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-box h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .auth-button:hover {
+            background: #c0392b;
+        }
+
+        .social-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .social-button {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .auth-links a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .divider {
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            color: #666;
+        }
+
+    </style>
+    {% block additional_styles %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        
+        {% block nav %}
+        <nav class="navbar navbar-expand-lg bg-black custom-navbar">
+          <div class="container-fluid" >
+              <a href="/" class="navbar-brand">
+                <img src="{{ url_for('static', filename='images/Learn Wise_transparent-.png') }}" alt="Learn Wise Logo">
+              </a>
+              
+              <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#navbarSupportedContent" 
+                      aria-controls="navbarSupportedContent" 
+                      aria-expanded="false" 
+                      aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+      
+              <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+                {% if hide_search is not defined %}
+                  <div class="search-bar mx-lg-auto" >
+                      <form action="{{ url_for('search_courses') }}" method="GET" class="d-flex">
+                          <input 
+                              type="search" 
+                              name="query" 
+                              placeholder=" 🔍 What do you want to learn?" 
+                              value="{{ request.args.get('query', '') }}"
+                              class="search-input form-control"
+                              required
+                          >
+                          <button type="submit" class="search-button btn btn-light">Search</button>
+                      </form>
+                  </div>
+                  {% endif %}
+
+                  {% if hide_nav_options is not defined %}
+                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{{ url_for('browse_courses') }}">
+                              <i class="fas fa-compass"></i> Browse
+                          </a>
+                      </li>
+      
+                      {% if current_user.is_authenticated %}
+                          <li class="nav-item dropdown">
+                              <div class="user-avatar nav-link text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  {{ current_user.fullname[:1] }}
+                              </div>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                  {% if current_user.is_instructor %}
+                                      <li><a class="dropdown-item" href="{{ url_for('instructor_dashboard') }}">Dashboard</a></li>
+                                      <li><a class="dropdown-item" href="{{ url_for('create_course') }}">Create Course</a></li>
+                                  {% else %}
+                                      <li><a class="dropdown-item" href="{{ url_for('student_dashboard') }}">My Learning</a></li>
+                                  {% endif %}
+                                  <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                              </ul>
+                          </li>
+                      {% else %}
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle text-light" href="#" role="button" 
+                                 data-bs-toggle="dropdown" aria-expanded="false">
+                                  Login
+                              </a>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                  <li><a class="dropdown-item" href="{{ url_for('student_login') }}">Student Login</a></li>
+                                  <li><a class="dropdown-item" href="{{ url_for('instructor_login') }}">Instructor Login</a></li>
+                              </ul>
+                          </li>
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle text-light" href="#" role="button" 
+                                 data-bs-toggle="dropdown" aria-expanded="false">
+                                  Sign Up
+                              </a>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                  <li><a class="dropdown-item" href="{{ url_for('student_signup') }}">Student Sign Up</a></li>
+                                  <li><a class="dropdown-item" href="{{ url_for('instructor_signup') }}">Instructor Sign Up</a></li>
+                              </ul>
+                          </li>
+                      {% endif %}
+                  </ul>
+                  {% endif %}
+              </div>
+          </div>
+      </nav>
+        {% endblock %}
+    </header>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    {% block content %}{% endblock %}
+    
+  </body>
+  <style>
+    body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    background: black;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+          }
+
+
+    /* Navbar styles */
+.navbar {
+    padding: 0.5rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /* box-shadow: white; */
+    background-color: var(--primary-color);
+    height: var(--navbar-height);
+    
+}
+
+.navbar-brand img {
+    height: 57px;
+    width: auto;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 650px;
+    padding-top: 15px;
+
+    
+}
+
+.search-input {
+    border-radius: 18px 0 0 18px !important;
+    background-color:rgba(222, 222, 222, 0.842);
+}
+
+.search-button {
+    border-radius: 0 18px 18px 0 !important;
+    background-color:rgba(222, 222, 222, 0.842);
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.user-avatar:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+  </style>
+</html>

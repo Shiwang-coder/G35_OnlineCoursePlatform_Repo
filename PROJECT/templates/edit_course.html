@@ -1,0 +1,185 @@
+{% set hide_search = true %}
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="edit-course-container">
+    <div class="form-header">
+        <br>
+        <br>
+        <h1 style="color: white;" >Edit Course</h1>
+    </div>
+
+    <div class="form-card">
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Course Title</label>
+                <input type="text" id="title" name="title" value="{{ course.title }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Course Description</label>
+                <textarea id="description" name="description" rows="5" required>{{ course.description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Technology & Programming" {% if course.category == 'Technology & Programming' %}selected{% endif %}>Technology & Programming</option>
+                    <option value="Science & Engineering" {% if course.category == 'Science & Engineering' %}selected{% endif %}>Science & Engineering</option>
+                    <option value="Creative Arts & Design" {% if course.category == 'Creative Arts & Design' %}selected{% endif %}>Creative Arts & Design</option>
+                    <option value="Business & Entrepreneurship" {% if course.category == 'Business & Entrepreneurship' %}selected{% endif %}>Business & Entrepreneurship</option>
+                    <option value="Personal Development" {% if course.category == 'Personal Development' %}selected{% endif %}>Personal Development</option>
+                    <option value="Health & Fitness" {% if course.category == 'Health & Fitness' %}selected{% endif %}>Health & Fitness</option>
+                    <option value="Humanities & Social Sciences" {% if course.category == 'Humanities & Social Sciences' %}selected{% endif %}>Humanities & Social Sciences</option>
+                    <option value="Education & Teaching" {% if course.category == 'Education & Teaching' %}selected{% endif %}>Education & Teaching</option>
+                    <option value="IT & Software" {% if course.category == 'IT & Software' %}selected{% endif %}>IT & Software</option>
+                    <option value="Language & Communication" {% if course.category == 'Language & Communication' %}selected{% endif %}>Language & Communication</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price ($)</label>
+                <input type="number" id="price" name="price" step="0.01" value="{{ course.price }}" required>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('instructor_dashboard') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn-primary">Update Course</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+/* Variables for theming */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --background-color: #f5f5f5;
+    --card-background: #ffffff;
+    --text-color: #333333;
+    --border-color: #cccccc;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.edit-course-container {
+    width: 600px;
+    max-width: 90%;
+    margin: 80px auto 0; /* Added top margin to account for fixed navbar */
+    /* padding: 2rem; */
+    box-sizing: border-box;
+}
+
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-header h1 {
+    color: var(--text-color);
+}
+
+.form-card {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #f8f9fa;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+    background-color: #ffffff;
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: #e9ecef;
+}
+
+/* Subtle Hover Effects */
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+    background-color: #ffffff;
+    border-color: var(--primary-color);
+}
+</style>
+{% endblock %}

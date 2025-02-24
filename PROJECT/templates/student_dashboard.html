@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<br>
+<br>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 style="color: white;" >My Learning Dashboard</h1>
+    </div>
+    
+    <div class="progress-overview">
+        {% if progress %}
+            <div class="card">
+                <h3 style="color: black;" >My Enrolled Courses</h3>
+                {% for item in progress %}
+                <div class="course-progress-item">
+                    <div class="progress-header">
+                        <h4 style="color: black;" >{{ item.course.title }}</h4>
+                        <span class="progress-percentage">{{ (item.completed_lessons / item.course.lessons|length * 100)|round }}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" ></div>
+                    </div>
+                    <div class="progress-details">
+                        <span>{{ item.completed_lessons }} of {{ item.course.lessons|length }} lessons completed</span>
+                        <a style="color: white;" href="{{ url_for('view_lesson', course_id=item.course.id, lesson_id=item.current_lesson) }}" class="continue-button">Continue Learning</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="card">
+                <div class="no-courses">
+                    <p>You haven't enrolled in any courses yet.</p>
+                    <a href="{{ url_for('search_courses') }}" class="search-courses-button">Browse Courses</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+.progress-overview {
+    display: grid;
+    gap: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.course-progress-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #ffffff;
+    transition: width 0.3s ease;
+}
+
+.progress-fill {
+    width: 0;
+}
+
+.progress-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.continue-button {
+    background: #e74c3c;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* .continue-button:hover {
+    background: #eb8989;
+} */
+
+.no-courses {
+    text-align: center;
+    padding: 2rem;
+}
+
+.search-courses-button {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+/* .search-courses-button:hover {
+    background: #2980b9;
+} */
+</style>
+{% endblock %}

@@ -1,0 +1,255 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<br>
+<br>
+<div class="search-results-container">
+    <!-- Categories Dropdown -->
+    <div class="categories-section mb-4">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="categoryDropdown">
+                <li><a class="dropdown-item {% if query == 'Technology & Programming' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Technology & Programming') }}">Technology & Programming</a></li>
+                <li><a class="dropdown-item {% if query == 'Science & Engineering' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Science & Engineering') }}">Science & Engineering</a></li>
+                <li><a class="dropdown-item {% if query == 'Creative Arts & Design' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Creative Arts & Design') }}">Creative Arts & Design</a></li>
+                <li><a class="dropdown-item {% if query == 'IT & Software' %}active{% endif %}" 
+                        href="{{ url_for('search_courses', query='IT & Software') }}">IT & Software</a></li>
+                <li><a class="dropdown-item {% if query == 'Business & Entrepreneurship' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Business & Entrepreneurship') }}">Business & Entrepreneurship</a></li>
+                <li><a class="dropdown-item {% if query == 'Personal Development' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Personal Development') }}">Personal Development</a></li>
+                <li><a class="dropdown-item {% if query == 'Health & Fitness' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Health & Fitness') }}">Health & Fitness</a></li>
+                <li><a class="dropdown-item {% if query == 'Humanities & Social Sciences' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Humanities & Social Sciences') }}">Humanities & Social Sciences</a></li>
+                <li><a class="dropdown-item {% if query == 'Education & Teaching' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Education & Teaching') }}">Education & Teaching</a></li>
+                
+                <li><a class="dropdown-item {% if query == 'Language & Communication' %}active{% endif %}" 
+                       href="{{ url_for('search_courses', query='Language & Communication') }}">Language & Communication</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="search-header">
+        {% if query %}
+            <h2>Search Results for "{{ query }}"</h2>
+            <p>Found {{ courses|length }} course(s)</p>
+        {% else %}
+            <h2>Browse Courses</h2>
+            <p>Discover our wide range of courses</p>
+        {% endif %}
+    </div>
+
+    {% if courses %}
+    <div  class="courses-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <div style="color: #f6f6f6;" class="course-content">
+                <h3 class="course-title">{{ course.title }}</h3>
+                <p class="course-instructor">By {{ course.instructor.fullname }}</p>
+                <p class="course-description">{{ course.description[:100] }}...</p>
+                <div class="course-footer">
+                    <span class="course-price">${{ "%.2f"|format(course.price) }}</span>
+                    {% if current_user.is_authenticated %}
+                        {% if not current_user.is_instructor %}
+                            <a style="color: white;" href="{{ url_for('enroll_course', course_id=course.id) }}" class="enroll-button">Enroll</a>
+                        {% endif %}
+                    {% else %}
+                        <a style="color: white; font-size: small; padding: 10; width: 60%;" href="{{ url_for('student_signup') }}" class="enroll-button">Sign Up to Enroll</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination and pagination.pages > 1 %}
+    <div class="pagination-container">
+        <nav aria-label="Course pagination">
+            <ul class="pagination">
+                <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('search_courses', query=query, page=pagination.prev_num) if pagination.has_prev else '#' }}">
+                        Previous
+                    </a>
+                </li>
+                
+                {% for page in pagination.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
+                    {% if page %}
+                        <li class="page-item {% if page == pagination.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('search_courses', query=query, page=page) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                
+                <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('search_courses', query=query, page=pagination.next_num) if pagination.has_next else '#' }}">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="no-results">
+        <p>No courses found for your search. Try different keywords!</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            return new bootstrap.Dropdown(dropdownToggleEl)
+        })
+    });
+    </script>
+
+<!-- At the top of search_results.html -->
+<style>
+    .search-results-container {
+  background: var(--panel-bg);
+}
+
+.course-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.categories-section {
+  background: var(--gradient-secondary);
+  margin: -2rem -2rem 2rem -2rem;
+  padding: 2rem;
+  border-radius: 0 0 15px 15px;
+}
+
+/* Quiz Styles */
+.quiz-section {
+  background: var(--highlight-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.question {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+    /* Course Grid Specific Styles */
+    .search-results-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    /* Categories Dropdown Specific */
+    .categories-section {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 2rem;
+    }
+    
+    .categories-section .dropdown-toggle {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    
+    /* Search Header Specific */
+    .search-header {
+      margin-bottom: 2rem;
+    }
+    
+    .search-header h2 {
+      color: var(--text-primary);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Pagination Specific */
+    .pagination-container {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+    }
+    .pagination .page-link {
+    color: #4A90E2;  /* Blue text for page numbers */
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #E3F2FD;  /* Light blue background on hover */
+    color: #2171C7;  /* Darker blue text on hover */
+    border-color: #4A90E2;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #4A90E2;  /* Blue background for active page */
+    border-color: #4A90E2;
+    color: #ffffff;  /* White text for active page */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;  /* Gray text for disabled buttons */
+    background-color: #ffffff;
+    border-color: #dee2e6;
+}
+
+/* Add some spacing between pagination items */
+.pagination .page-item:not(:first-child) .page-link {
+    margin-left: -1px;
+}
+
+/* Rounded corners for first and last items */
+.pagination .page-item:first-child .page-link {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.pagination .page-item:last-child .page-link {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+    </style>
+
+{% endblock %}

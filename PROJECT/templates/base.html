@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Wise</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Base styles */
+        :root {
+    --primary-color: #000;
+    --text-color: #fff;
+    --transition-speed: 0.3s;
+    --navbar-height: 60px;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    background: var(--primary-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Navbar styles */
+.navbar {
+    padding: 0.5rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /* box-shadow: white; */
+    background-color: var(--primary-color);
+    height: var(--navbar-height);
+    
+}
+
+
+
+.navbar-brand img {
+    height: 57px;
+    width: auto;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 600px;
+    padding-top: 15px;
+    
+}
+
+.search-input {
+    border-radius: 18px 0 0 18px !important;
+    background-color:rgba(222, 222, 222, 0.842);
+}
+
+.search-button {
+    border-radius: 0 18px 18px 0 !important;
+    background-color:rgba(222, 222, 222, 0.842);
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.user-avatar:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Landing page styles */
+.landing-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    padding-top: calc(var(--navbar-height) + 1rem);
+    padding-bottom: 3rem;
+    padding-left: 2rem;
+    padding-right: 2.5rem;
+    padding-top: 5rem;
+    
+    
+}
+
+.content-section {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 60px;
+}
+
+.main-heading {
+    font-size: 3.0rem;
+    font-weight: 50px;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 0rem;
+    opacity: 0.8;
+}
+
+.options-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.option-item {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.option-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Carousel styles */
+.carousel-section {
+    width: 100%;
+    height: calc(100vh - var(--navbar-height));
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap:8px;
+    height: 100%;
+    max-height: 900px;
+    overflow: hidden;
+    padding: 5px 0;
+}
+
+.carousel {
+    width: 350px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.track {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    /* padding: 5px; */
+    animation: 20s linear infinite;
+}
+
+.upward {
+    animation-name: moveUp;
+}
+
+.downward {
+    animation-name: moveDown;
+}
+
+.item {
+    height: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    transition: transform var(--transition-speed);
+    background-color: var(--primary-color);
+}
+
+.item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes moveUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(calc(-50% - 7.5px)); }
+}
+
+@keyframes moveDown {
+    0% { transform: translateY(calc(-50% - 7.5px)); }
+    100% { transform: translateY(0); }
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+    .search-bar {
+        margin: 1rem 0;
+        order: 3;
+    }
+    
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+
+    .landing-container {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .landing-container {
+        grid-template-columns: 1fr;
+        padding-top: calc(var(--navbar-height) + 2rem);
+    }
+    
+    .main-heading {
+        font-size: 2.5rem;
+    }
+
+    .content-section {
+        padding: 1rem;
+    }
+
+    .carousel-section {
+        height: auto;
+        min-height: 500px;
+    }
+
+    .container {
+        padding: 1rem 0;
+        gap: 10px;
+    }
+
+    .carousel {
+        width: 160px;
+    }
+
+    .item {
+        height: 120px;
+    }
+}
+
+
+@media (max-width: 768px) {
+            .landing-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-heading {
+                font-size: 2.5rem;
+            }
+        }
+
+/* SLIDER CONTAINER  */
+
+
+
+.slider-container {
+            width: 100%;
+            height: 550px;
+            overflow: hidden;
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .slider {
+            display: flex;
+            position: absolute;
+            left: 0;
+            animation: slideshow 20s linear infinite;
+            /* Will be calculated by JS */
+            width: max-content;
+            margin-right: 20px;
+        }
+
+        .slide {
+            position: relative;
+            flex: 0 0 400px;
+            margin-right: 20px;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .slide-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            color: #000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.669),
+            0 6px 20px rgba(0, 0, 0, 0.637);
+        }
+
+        @keyframes slideshow {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+
+/* CTA SECTION  */
+
+
+
+        /* CTA Section styles */
+        .contain {
+            max-width: 1270px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .cta-sect {
+            background: linear-gradient(135deg, #ffffff 0%, #c7caceb5 100%);
+            /* padding: clamp(2rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem); */
+            padding: clamp(1.0rem, 4vw, 3rem) clamp(1rem, 5vw, 3rem);
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .cta-sect h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .cta-sect p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-but {
+            display: inline-block;
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem);
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            transition: all 0.3s ease;
+            border: 2px solid #e74c3c;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+        }
+
+        .cta-but:hover {
+            background: #d44231;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .cta-but:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+        }
+
+      /*=============== GOOGLE FONTS ===============*/
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --first-color: hsl(82, 60%, 28%);
+  --title-color: hsl(0, 0%, 15%);
+  --text-color: hsl(0, 0%, 100%);
+  --body-color: hsl(0, 0%, 95%);
+  --container-color: hsl(0, 0%, 100%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Poppins", sans-serif;
+  --h2-font-size: 1.25rem;
+  --small-font-size: .813rem;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1120px) {
+  :root {
+    --h2-font-size: 1.5rem;
+    --small-font-size: .875rem;
+  }
+}
+
+/*=============== BASE ===============*/
+/* * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+} */
+
+/* body {
+  font-family: var(--body-font);
+  background-color: var(--body-color);
+  color: var(--text-color);
+} */
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/*=============== CARD ===============*/
+.containe{
+  display: grid;
+  place-items: center;
+  margin-inline: 1.5rem;
+  padding-block: 5rem;
+}
+
+.card__containe {
+  display: grid;
+  row-gap: 3.5rem;
+}
+
+.card__articl {
+  position: relative;
+  overflow: hidden;
+}
+
+.card__im {
+  width: 328px;
+  border-radius: 1.5rem;
+}
+
+.card__dat {
+  width: 280px;
+  background-color: var(--container-color);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 24px hsla(0, 0%, 0%, .15);
+  border-radius: 1rem;
+  position: absolute;
+  bottom: -9rem;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  opacity: 0;
+  transition: opacity 1s 1s;
+}
+
+.card__descriptio {
+  display: block;
+  font-size: var(--small-font-size);
+  margin-bottom: .25rem;
+}
+
+.card__titl {
+  font-size: var(--h2-font-size);
+  font-weight: 500;
+  color: var(--title-color);
+  margin-bottom: .75rem;
+}
+
+.card__butto {
+  text-decoration: none;
+  font-size: var(--small-font-size);
+  font-weight: 500;
+  color: var(--first-color);
+}
+
+.card__butto:hover {
+  text-decoration: underline;
+}
+
+/* Naming animations in hover */
+.card__articl:hover .card__dat {
+  animation: show-data 1s forwards;
+  opacity: 1;
+  transition: opacity .3s;
+}
+
+.card__articl:hover {
+  animation: remove-overflow 2s forwards;
+}
+
+.card__articl:not(:hover) {
+  animation: show-overflow 2s forwards;
+}
+
+.card__articl:not(:hover) .card__dat {
+  animation: remove-data 1s forwards;
+}
+
+/* Card animation */
+@keyframes show-data {
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(-7rem);
+  }
+}
+
+@keyframes remove-overflow {
+  to {
+    overflow: initial;
+  }
+}
+
+@keyframes remove-data {
+  0% {
+    transform: translateY(-7rem);
+  }
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(.5rem);
+  }
+}
+
+@keyframes show-overflow {
+  0% {
+    overflow: initial;
+    pointer-events: none;
+  }
+  50% {
+    overflow: hidden;
+  }
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (max-width: 340px) {
+  .containe {
+    margin-inline: 1rem;
+  }
+
+  .card__dat {
+    width: 250px;
+    padding: 1rem;
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 768px) {
+  .card__containe {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.5rem;
+  }
+}
+
+/* For large devices */
+@media screen and (min-width: 1120px) {
+  .containe {
+    height: 100vh;
+  }
+
+  .card__containe {
+    grid-template-columns: repeat(4, 1fr);  /* Changed from 3 to 4 columns */
+  }
+  .card__im {
+    width: 348px;
+  }
+  .card__dat {
+    width: 316px;
+    padding-inline: 2.5rem;
+  }
+}
+
+
+
+
+/* FOOTER  */
+
+
+.footer {
+    background-color: #1c1d1f;
+    color: #fff;
+    padding: 24px 0;
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.foote {
+    background-color: #26272a;
+    color: #fff;
+    padding: 24px 0;
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.footer-container {
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 0 24px;
+    padding-top: 40px;
+}
+
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+
+.footer-links h3 {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 4px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid #3e4143;
+}
+.footer-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #3e4143;
+}
+
+.footer-logo {
+    font-size: 25px;
+    font-weight: 15px;
+    padding-left: 35px;
+}
+.footer-bottom-logo {
+    font-size: 34px;
+    font-weight: 25px;
+    /* padding-left: 35px; */
+}
+
+.footer-copyright {
+    font-size: 18px;
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.language-selector img {
+    width: 20px;
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+}
+
+.company-logos {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .company-logo {
+            height: 30px;
+            width: auto;
+            opacity: 0.7;
+            padding-right: 20px;
+            gap: 4px;
+        }
+        .custom-navbar {
+  box-shadow: 0 33px 20px rgba(0, 0, 0, 0.684); /* Add downward shadow */
+}
+.custom-navbar {
+    height: 80px;
+            padding-top: 10px; /* Padding to adjust the content's position */
+        padding-bottom: 28px;  /* Default height */
+}
+
+@media (max-width: 767px) {
+    .custom-navbar {
+        height: 60px;  /* Adjust height for smaller screens */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.trust-banner {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #000000;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.trust-banner-text {
+    color: #6a6f73;
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.company-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 48px;
+    margin: 0 auto;
+}
+
+.company-logo {
+    height: 64px;
+    width: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.company-logo:hover {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .trust-banner {
+        padding: 30px 15px;
+    }
+    
+    .trust-banner-text {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .company-logos {
+        gap: 32px;
+    }
+    
+    .company-logo {
+        height: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .company-logos {
+        gap: 24px;
+    }
+    
+    .company-logo {
+        height: 90px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.hero-section {
+    background-color: #000;
+    color: #fff;
+    padding: 20px 40px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+.hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.hero-title {
+    font-size: 60px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 0;
+    flex: 1;
+    padding-top: 50px;
+}
+
+.features-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 24px;
+}
+
+.check-icon {
+    color: #00ff8c; /* Bright green color */
+    font-size: 24px;
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-text {
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .hero-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+    }
+    
+    .feature-item {
+        font-size: 20px;
+    }
+    
+    .feature-text {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 20px;
+    }
+    
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .feature-item {
+        font-size: 18px;
+    }
+    
+    .feature-text {
+        font-size: 18px;
+    }
+}
+
+
+
+
+
+
+
+.stats-container {
+    background-color: #000;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 24px 32px;
+    min-width: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-number {
+    color: #00ff8c; /* Neon green color */
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(0, 255, 140, 0.5);
+}
+
+.stat-label {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* Star color adjustment */
+.stat-number:last-child {
+    font-size: 32px; /* Slightly smaller for the rating */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .stats-container {
+        gap: 16px;
+    }
+    
+    .stat-card {
+        padding: 20px 24px;
+        min-width: 180px;
+    }
+    
+    .stat-number {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        padding: 20px 10px;
+    }
+    
+    .stat-card {
+        padding: 16px 20px;
+        min-width: 150px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+}
+
+/* Optional: Add hover effect */
+.stat-card:hover {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 255, 140, 0.1);
+}
+
+/* Optional: Add animation for numbers */
+@keyframes glow {
+    0% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(0, 255, 140, 0.7); }
+    100% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+}
+
+.stat-number {
+    animation: glow 2s infinite;
+}
+
+
+
+
+
+
+/* Categories section */
+.categories {
+    padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 3vw, 2rem);
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+.categories h2 {
+    text-align: center;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: #ffffff;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Grid layout */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    padding: 0 clamp(0.5rem, 2vw, 0.5rem);
+}
+
+/* Card styles */
+.category-card {
+    background: white;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 150px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: #2c3e50;
+}
+
+.category-card h3 {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    color: #2c3e50;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.category-card p {
+    color: #6c757d;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.category-card:hover h3,
+.category-card:hover p {
+    color: white;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .category-card {
+        min-height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories {
+        padding: 1.5rem 1rem;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .category-card {
+        min-height: 120px;
+    }
+}
+@media (max-width: 992px) {  /* Added a new breakpoint for larger tablets */
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);  /* 3 columns */
+    }
+}
+
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);  /* 2 columns */
+    }
+}
+
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: 1fr;  /* 1 column */
+    }
+}
+
+.hero-secti {
+    padding: 6rem 2rem;
+    background-color: #000000;
+    width: 100%;
+}
+
+.hero-contain {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.main-headi {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    color: #2d4966;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.descripti {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #fffefe;
+}
+
+@media (max-width: 768px) {
+    .hero-contain {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .main-headi {
+        font-size: 2.5rem;
+    }
+
+    .descripti {
+        font-size: 1.1rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.hero-sec {
+    background-color: #000000;
+    padding: 0.5rem 0rem;
+}
+
+.hero-con {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.main-hea {
+    font-size: 3.0rem;
+    line-height: 1.0;
+    color: #e4e4e4;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.sub-hea {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #767676;
+    margin-bottom: 2rem;
+}
+
+.highlight {
+    font-weight: 600;
+    color: #e21b1b;
+}
+
+.button-gr{
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.primary-bt {
+    background-color: #0066CC;
+    color: white;
+    border: none;
+}
+
+.primary-bt:hover {
+    background-color: #0052a3;
+}
+
+.secondary-bt {
+    background-color: transparent;
+    color: #0066CC;
+    border: 1px solid #0066CC;
+}
+
+.secondary-bt:hover {
+    background-color: #f0f7ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-hea {
+        font-size: 2.5rem;
+    }
+    
+    .sub-hea {
+        font-size: 1.25rem;
+    }
+
+    .button-gr {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-black custom-navbar">
+        <div class="container-fluid" >
+            <a href="/" class="navbar-brand">
+                <img src="./../static/images/Learn Wise_transparent-.png" alt="Learn Wise Logo">
+            </a>
+            
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#navbarSupportedContent" 
+                    aria-controls="navbarSupportedContent" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+                <div class="search-bar mx-lg-auto" >
+                    <form action="{{ url_for('search_courses') }}" method="GET" class="d-flex">
+                        <input 
+                            type="search" 
+                            name="query" 
+                            placeholder=" 🔍 What do you want to learn?" 
+                            value="{{ request.args.get('query', '') }}"
+                            class="search-input form-control"
+                            required
+                        >
+                        <button type="submit" class="search-button btn btn-light">Search</button>
+                    </form>
+                </div>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url_for('search_courses', query='Technology & Programming') }}">Technology & Programming</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('search_courses', query='Science & Engineering') }}">Science & Engineering</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('search_courses', query='Creative Arts & Design') }}">Creative Arts & Design</a></li>
+                        </ul>
+                    </li>
+    
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <div class="user-avatar nav-link text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ current_user.fullname[:1] }}
+                            </div>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% if current_user.is_instructor %}
+                                    <li><a class="dropdown-item" href="{{ url_for('instructor_dashboard') }}">Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('create_course') }}">Create Course</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{{ url_for('student_dashboard') }}">My Learning</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" role="button" 
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Login
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url_for('student_login') }}">Student Login</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('instructor_login') }}">Instructor Login</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" role="button" 
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Sign Up
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url_for('student_signup') }}">Student Sign Up</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('instructor_signup') }}">Instructor Sign Up</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="landing-container">
+        <div class="content-section">
+            <h1 class="main-heading">Learn From Experts, <br>Master Your Skills</h1>
+            <p class="subtitle">Explore comprehensive lessons from industry professionals</p>
+            <section class="hero-sec">
+                <div class="hero-con">
+                    <h1 class="main-hea">Develop skills that move<br>your career forward</h1>
+                    <p class="sub-hea">
+                        Get guidance to develop the <span class="highlight">critical skills</span> you need to
+                        advance your career from the only learning platform
+                        informed by the world's largest talent marketplace.
+                    </p>
+                    <div class="button-gr">
+                        <button class="btn primary-bt">Sign Up</button>
+                        <button class="btn secondary-bt">Browse</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="carousel-section">
+            <div class="container">
+                <div class="carousel">
+                    <div class="track upward">
+                        <!-- Updated image elements -->
+                        
+                        <div class="item"><img src="./../static/images/2.png" alt="Course 1"></div>
+                        <div class="item"><img src="./../static/images/6.png" alt="Course 4"> </div>
+                        <div class="item"><img src="./../static/images/5.png" alt="Course 2"></div>
+                        <div class="item"><img src="./../static/images/4.png" alt="Course 4"></div>
+
+                        <!-- <div class="item"><img src="./../static/images/istockphoto-904284308-2048x2048.jpg" alt="Course 4"></div> -->
+                        <div class="item"><img src="./../static/images/11.png" alt="Course 1"></div>
+                        <div class="item"><img src="./../static/images/13.png" alt="Course 2"></div>
+                    </div>
+                </div>
+
+                <div class="carousel">
+                    <div class="track downward">
+                        <!-- Updated image elements -->
+                        <div class="item"><img src="./../static/images/1.png" alt="Course 5"></div>
+                        <div class="item"><img src="./../static/images/13.png" alt="Course 2"></div>
+                        <div class="item"><img src="./../static/images/11.png" alt="Course 1"></div>
+                        <div class="item"><img src="./../static/images/9.png" alt="Course 5"></div>
+                        <div class="item"><img src="./../static/images/6.png" alt="Course 5"></div>
+
+
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div style="padding-left: 85px;padding-bottom: 30px;padding-top: 100px;">
+    <h1>All the skills you need in one place</h1>
+    <p>
+From critical skills to technical topics, Udemy supports your professional development.
+    </p>
+</div>
+
+
+
+
+
+
+<section class="categories" >
+    <h2>Top Categories</h2>
+    <div class="category-grid">
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='Web Development') }}" class="category-link"style="text-decoration: none;">
+                <h3>Web Development</h3>
+                <p>Learn modern web technologies</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='Data Science') }}" class="category-link"style="text-decoration: none;">
+                <h3>Data Science</h3>
+                <p>Master data analysis and ML</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='Digital Marketing') }}" class="category-link " style="text-decoration: none;">
+                <h3>Digital Marketing</h3>
+                <p>Grow your online presence</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='UI/UX Design') }}" class="category-link"style="text-decoration: none;">
+                <h3>UI/UX Design</h3>
+                <p>Create stunning visuals</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='Mobile Development') }}" class="category-link"style="text-decoration: none;">
+                <h3>Mobile Development</h3>
+                <p>Build iOS and Android apps</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='Cloud Computing') }}" class="category-link"style="text-decoration: none;">
+                <h3>Cloud Computing</h3>
+                <p>Master cloud technologies</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='Cybersecurity') }}" class="category-link"style="text-decoration: none;">
+                <h3>Cybersecurity</h3>
+                <p>Protect digital assets</p>
+            </a>
+        </div>
+        <div class="category-card">
+            <a href="{{ url_for('search_courses', query='AI & Machine Learning') }}" class="category-link"style="text-decoration: none;">
+                <h3>AI & Machine Learning</h3>
+                <p>Build intelligent systems</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="hero-secti">
+    <div class="hero-contain">
+        <div class="left-conte">
+            <h1 class="main-headi">
+                Define your future.<br>
+                We'll light the way.
+            </h1>
+        </div>
+        <div class="right-conte">
+            <p class="descripti">
+                Learning paths aren't always straightforward. Whether you're looking to advance, switch careers, or start something new, we provide the tools and courses you need. With thousands of expert-led courses, we're here to support your journey at every stage.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDER COMTAIMER  -->
+<div class="slider-container">
+    <div class="slider" id="slider">
+        <!-- Original set -->
+        <div class="slide">
+            <img src="./../static/images/Your paragraph text.png" alt="Video">
+            <div class="slide-label">Ilustrations</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Grow your brand through digital platforms..png" alt="Freelance">
+            <div class="slide-label">Socialmedia and Marketing</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/fb9caf5ec5b9a346e89497e2e1b99d15.jpg" alt="UI/UX Design">
+            <div class="slide-label">UI/UX Design</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Your paragraph text (1).png" alt="Productivity">
+            <div class="slide-label">Python Programming</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Build smart systems with data-driven models..png" alt="Photography">
+            <div class="slide-label">Machine Learning</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Safeguard data and systems from threats..png" alt="Photography">
+            <div class="slide-label">Cyber Security</div>
+        </div>
+        
+        <!-- Duplicate set for seamless loop -->
+        <div class="slide">
+            <img src="./../static/images/Your paragraph text.png" alt="Video">
+            <div class="slide-label">Ilustrations</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Grow your brand through digital platforms..png" alt="Freelance">
+            <div class="slide-label">Socialmedia and Marketing</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/fb9caf5ec5b9a346e89497e2e1b99d15.jpg" alt="UI/UX Design">
+            <div class="slide-label">UI/UX Design</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Your paragraph text (1).png" alt="Productivity">
+            <div class="slide-label">Python Programming</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Build smart systems with data-driven models..png" alt="Photography">
+            <div class="slide-label">Machine Learning</div>
+        </div>
+        <div class="slide">
+            <img src="./../static/images/Safeguard data and systems from threats..png" alt="Photography">
+            <div class="slide-label">Cyber Security</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            Creative<br>
+            Learning<br>
+            Made Easy
+        </h1>
+        
+        <div class="features-list">
+            <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span class="feature-text">Thousands of creative classes. Beginner to pro.</span>
+            </div>
+            
+            <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span class="feature-text">Taught by creative pros and industry icons.</span>
+            </div>
+            
+            <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span class="feature-text">Learning Paths to help you achieve your goals.</span>
+            </div>
+            
+            <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span class="feature-text">Certificates to celebrate your accomplishments.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-container">
+    <div class="stat-card">
+        <div class="stat-number">25K+</div>
+        <div class="stat-label">CLASSES</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">600K+</div>
+        <div class="stat-label">MEMBERS</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">8K+</div>
+        <div class="stat-label">TEACHERS</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">4.8 ★★★★★</div>
+        <div class="stat-label">APP STORE RATING</div>
+    </div>
+</div>
+
+
+
+
+
+<div class="trust-banner">
+    <div class="trust-banner-text">
+       <h4 >Trusted by over <span style="color: #e74c3c;">16,000 </span>companies and millions of learners around the world</h4> 
+    </div>
+    <div class="company-logos"style="padding-bottom: 100px;">
+        <img src="https://www.vectorlogo.zone/logos/ericsson/ericsson-icon.svg" alt="Volkswagen" class="company-logo">
+        <img src="https://download.logo.wine/logo/Samsung/Samsung-Logo.wine.png" alt="Samsung" class="company-logo">
+        <img src="https://download.logo.wine/logo/Cisco_Systems/Cisco_Systems-Logo.wine.png" alt="Cisco" class="company-logo">
+        <img src="https://download.logo.wine/logo/Vimeo/Vimeo-Logo.wine.png" alt="Vimeo" class="company-logo">
+        <img src="https://www.vectorlogo.zone/logos/hp/hp-icon.svg" alt="P&G" class="company-logo">
+        <img src="https://download.logo.wine/logo/Hewlett_Packard_Enterprise/Hewlett_Packard_Enterprise-Logo.wine.png" alt="Hewlett Packard Enterprise" class="company-logo">
+        <img src="https://download.logo.wine/logo/Citigroup/Citigroup-Logo.wine.png" alt="Citi" class="company-logo">
+        <!-- <img src="https://download.logo.wine/logo/Ericsson/Ericsson-Logo.wine.png" alt="Ericsson" class="company-logo"> -->
+    </div>
+</div>
+
+
+
+    <div class="contain">
+        <section class="cta-sect">
+            <h2>Ready to Start Learning?</h2>
+            <p>Join millions of learners from around the world and unlock your potential with our comprehensive courses.</p>
+            <a href="#" class="cta-but">Get Started</a>
+        </section>
+    </div>
+
+<!-- ABOUT uS -->
+ <h1 style="text-align: center; padding-top: 50px;">About Us</h1>
+<div class="containe">
+    <div class="card__containe">
+       <article class="card__articl">
+          <img src="./../static/images/IMG20241123235919.jpg" alt="image" class="card_im" >
+
+          <div class="card__dat">
+             <!-- <span class="card__descriptio">Vancouver Mountains, Canada</span> -->
+             <h2 class="card__titl">Siwang Sharma</h2>
+             <!-- <a href="#" class="card__butto">Read More</a> -->
+              
+              <p style="color: #000;">Hello there! As the team leader, I manage routing and navigation, ensuring seamless page transitions. I also collaborate on backend tasks to ensure smooth frontend-backend integration.</p>
+          </div>
+       </article>
+
+       <article class="card__articl">
+          <img src="./../static/images/IMG_20240918_213300.jpg" alt="image" class="card_im">
+
+          <div class="card__dat">
+             <!-- <span class="card__descriptio">Poon Hill, Nepal</span> -->
+             <h2 class="card__titl">Sarthak Kanwar</h2>
+             <p style="color: #000;">Hi there! I focused on frontend development, using HTML, CSS, and Bootstrap to create visually appealing and user-friendly interfaces. I ensure the platform is both functional and aesthetically pleasing.</p>
+
+            </div>
+       </article>
+
+       <article class="card__articl">
+          <img src="./../static/images/IMG_0467.jpeg.jpg" alt="image" class="card_im">
+
+          <div class="card__dat">
+             <!-- <span class="card__descriptio">Bojcin Forest, Serbia</span> -->
+             <h2 class="card__titl">Jainish Kumar Jindal</h2>
+             <p style="color: #000;">Hello there! I specialize in backend development, ensuring smooth server-side operations. With my Python skills, I build robust systems, manage databases, and implement secure login authentications.</p>
+
+          </div>
+       </article>
+
+       <article class="card__articl">
+          <img src="./../static/images/477914063_1121812856387355_7180460577428884563_n.jpg" alt="image" class="card_im">
+
+          <div class="card__dat">
+             <!-- <span class="card__descriptio">Swiss Alps, Switzerland</span> -->
+             <h2 class="card__titl">Suryansh Tangra</h2>
+             <p style="color: #000;">Hello there! I work across both frontend and backend, bridging design and functionality. My expertise in CSS, Bootstrap, and backend development helps create a cohesive and well-rounded platform.</p>
+
+          </div>
+       </article>
+    </div>
+ </div>
+
+<div style="text-align: center;">
+    <p>
+        All memberships will be billed automatically on a recurring basis until canceled. If eligible for a free trial, cancel before the trial ends to avoid being <br>charged. Offer only valid for new paid subscribers. See full terms of service <span style="color: #00ff8c;"> here.</span>
+    </p>
+</div>
+
+
+ <!-- FOOTER  -->
+
+
+
+
+ <footer class="foote">
+    <div class="footer-header">
+        <div class="footer-logo"><p>Top companies choose <span style="color:#e84c3dff;font-weight: 700;">Learn Wise</span> Business to build in-demand career skills.</p></div>
+        <div class="company-logos">
+            <!-- <img src="path-to-nasdaq-logo.png" alt="Nasdaq" class="company-logo"> -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo" class="company-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" class="company-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Meta (Facebook) Logo" class="company-logo">
+
+            <!-- <img src="path-to-volkswagen-logo.png" alt="Volkswagen" class="company-logo">
+            <img src="path-to-box-logo.png" alt="Box" class="company-logo">
+            <img src="path-to-netapp-logo.png" alt="NetApp" class="company-logo">
+            <img src="path-to-eventbrite-logo.png" alt="Eventbrite" class="company-logo"> -->
+        </div>
+        
+    
+    </div>
+    <div class="footer-container">
+        <div>
+            <h3 style="padding-bottom: 35px;">Explore top skills and certifications</h3>
+        </div>
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h3>Certifications by Issuer</h3>
+                <ul>
+                    <li><a href="#">Amazon Web Services</a></li>
+                    <li><a href="#">(AWS) Certifications</a></li>
+                    <li><a href="#">Six Sigma Certification</a></li>
+                    <li><a href="#">Microsoft Certifications</a></li>
+                    <li><a href="#">Cisco Certifications</a></li>
+                    <li><a href="#">Tableau Certifications</a></li>
+                    <li><a href="#">See all Certifications</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Web Development</h3>
+                <ul>
+                    <li><a href="#">Web Development</a></li>
+                    <li><a href="#">Java Script</a></li>
+                    <li><a href="#">React JS</a></li>
+                    <li><a href="#">Angular</a></li>
+                    <li><a href="#">Java</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Data Science</h3>
+                <ul>
+                    <li><a href="#">Data Science</a></li>
+                    <li><a href="#">Python</a></li>
+                    <li><a href="#">Machine Learning</a></li>
+                    <li><a href="#">Deep Learning</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Business Analytics & Intelligence</h3>
+                <ul>
+                    <li><a href="#">Microsoft Excel</a></li>
+                    <li><a href="#">SQL</a></li>
+                    <li><a href="#">Microsoft Power BI</a></li>
+                    <li><a href="#">Data Analysis</a></li>
+                    <li><a href="#">Business Analysis</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<footer class="footer">
+    <!-- footerrr -->
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-links">
+                <h3>Learn Wise Business</h3>
+                <ul>
+                    <li><a href="#">Teach on Lear Wise</a></li>
+                    <li><a href="#">Get the app</a></li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Careers</h3>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Help and Support</a></li>
+                    <li><a href="#">Affiliate</a></li>
+                    <li><a href="#">Investors</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Terms</h3>
+                <ul>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Cookie settings</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                    <li><a href="#">Accessibility statement</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Featured Topics</h3>
+                <ul>
+                    <li><a href="#">Development</a></li>
+                    <li><a href="#">Business</a></li>
+                    <li><a href="#">IT & Software</a></li>
+                    <li><a href="#">Design</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-logo">Learn Wise</div>
+            <div class="footer-copyright">© 2025 Learnwise, Inc.</div>
+            <!-- <div class="language-selector">
+                <img src="https://fontawesome.com/icons/globe?f=classic&s=solid" alt="Globe">
+                English
+            </div> -->
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tracks = document.querySelectorAll('.track');
+            
+            tracks.forEach(track => {
+                track.addEventListener('animationend', () => {
+                    track.style.animation = 'none';
+                    track.offsetHeight; // Trigger reflow
+                    track.style.animation = null;
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('slider');
+            const slides = document.querySelectorAll('.slide');
+            
+            // Clone slides if needed for smoother loop
+            const slideCount = slides.length;
+            const sliderWidth = slideCount * slides[0].offsetWidth;
+            
+            // Update slider width to accommodate all slides
+            slider.style.width = `${sliderWidth}px`;
+        });
+    </script>
+</body>
+</html>

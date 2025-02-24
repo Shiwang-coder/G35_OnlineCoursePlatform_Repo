@@ -1,0 +1,42 @@
+{% set hide_search = true %}
+{% set hide_nav_options = true %}
+
+{% extends "layout.html" %}
+
+{% block title %}LearnWise - Instructor Login{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>Instructor Login</h2>
+        
+        {# Show any flash messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('instructor_login') }}">
+            <div class="form-group">
+                <label for="email">Instructor Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="auth-button">Login as Instructor</button>
+        </form>
+        
+        <div class="auth-links" style="color: rgb(44, 44, 60)" >
+            Want to become an instructor? <a href="{{ url_for('instructor_signup') }}">Sign up as Instructor</a>
+        </div>
+    </div>
+</div>
+<style>
+    
+</style>
+{% endblock %}

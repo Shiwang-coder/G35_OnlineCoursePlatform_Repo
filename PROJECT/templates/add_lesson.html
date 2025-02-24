@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+{% set hide_search = true %}
+{% block content %}
+<br>
+<br>
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>Add Lesson to {{ course.title }}</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Lesson Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="has_quiz" value="yes"> Add quiz to this lesson
+                </label>
+            </div>
+            <button type="submit" class="auth-button">Add Lesson</button>
+        </form>
+    </div>
+</div>
+<style>
+/* Variables for theming */
+:root {
+    --primary-color: #4a90e2; /* Example */
+    --secondary-color: #6f42c1; /* Example */
+    --background-color: #f8f9fa; /* Light gray */
+    --text-color: #343a40; /* Dark gray */
+    --border-color: #ced4da; /* Light gray border */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: sans-serif; /* Use a modern font */
+}
+
+/* Overall Container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #e0eafc, #cfdef3); /* Softer gradient */
+    padding: 2rem;
+}
+
+/* Auth Box */
+.auth-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 3rem;
+    box-shadow: var(--box-shadow);
+    width: 600px;
+    max-width: 90%;
+    overflow: hidden; /* Prevents content from overflowing rounded corners */
+}
+
+.auth-box h2 {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-weight: 500; /* Slightly bolder labels */
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: calc(100% - 1rem);
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: var(--transition); /* Smooth transitions */
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(var(--primary-color-rgb), 0.2); /* Subtle glow on focus */
+}
+/* Convert primary color to RGB for box-shadow */
+:root {
+    --primary-color-rgb: 74, 144, 226; /* RGB values of your primary color */
+}
+
+.form-group textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+/* Buttons */
+.auth-button {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+}
+
+.auth-button:hover {
+    background: var(--secondary-color); /* Use secondary color on hover */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-box {
+        padding: 2rem;
+    }
+}
+
+/* Subtle Animations (Optional) */
+.auth-box {
+    animation: fadeIn 0.5s ease-in-out; /* Fade in animation */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+</style>
+
+{% endblock %}

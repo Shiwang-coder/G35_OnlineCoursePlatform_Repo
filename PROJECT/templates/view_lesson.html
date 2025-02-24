@@ -1,0 +1,172 @@
+{% set hide_search = true %}
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="lesson-container">
+    <div class="lesson-sidebar">
+        <div class="course-progress">
+            <div class="progress-header">
+                <h3 style="color: black;"  >Course Progress</h3>
+                <span style="color: black;" >Lesson {{ current_lesson_number }} of {{ total_lessons }}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" ></div>
+            </div>
+        </div>
+        
+        <div class="lesson-list">
+            {% for course_lesson in course_lessons %}
+            <a href="{{ url_for('view_lesson', course_id=course_lesson.course_id, lesson_id=course_lesson.id) }}" 
+               class="lesson-item {% if course_lesson.id == lesson.id %}active{% endif %}">
+                <span class="lesson-number">{{ course_lesson.order }}</span>
+                <span class="lesson-title">{{ course_lesson.title }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="lesson-content">
+        <h1 style="color: black;"  >{{ lesson.title }}</h1>
+        <div style="color: black;" class="lesson-text">
+            {{ lesson.content|safe }}
+        </div>
+        
+        {% if quiz %}
+        <div class="quiz-section">
+            <h2 style="color: black;" >Lesson Quiz</h2>
+            <form action="{{ url_for('submit_quiz', lesson_id=lesson.id) }}" method="POST" class="quiz-form">
+                {% for question in quiz.questions %}
+                <div class="question">
+                    <p style="color: black;" >{{ question.question_text }}</p>
+                    {% for option in question.options %}
+                    <label style="color: black;" class="option">
+                        <input type="radio" name="answer_{{ question.id }}" value="{{ option }}">
+                        {{ option }}
+                    </label>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="submit-quiz">Submit Quiz</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.lesson-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.lesson-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.lesson-content {
+    flex-grow: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.course-progress {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #3498db;
+    transition: width 0.3s ease;
+}
+
+.lesson-list {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.lesson-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    text-decoration: none;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.lesson-item:hover {
+    background-color: #f8f9fa;
+}
+
+.lesson-item.active {
+    background-color: #e3f2fd;
+}
+
+.lesson-number {
+    width: 24px;
+    height: 24px;
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+}
+
+.quiz-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.question {
+    margin-bottom: 1.5rem;
+}
+
+.option {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.submit-quiz {
+    background: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-quiz:hover {
+    background: #2980b9;
+}
+</style>
+{% endblock %}
